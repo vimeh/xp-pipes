@@ -1,0 +1,80 @@
+.TH WLPIPES 1 "2026-09-25" "wlpipes 0.4.1" "User Commands"
+.SH NAME
+wlpipes \- Windows XP 3D Pipes recreation for Wayland
+.SH SYNOPSIS
+.B wlpipes
+.RI [ options ]
+.SH DESCRIPTION
+A native animation client with per-output scenes and shared process random state.
+Normal single/multiple growth, all joint and surface modes, layout and timing are
+reconstructed from XP's executable. Materials use per-vertex Gouraud lighting.
+Original artwork is not bundled; some texture-wrap behavior is driver-dependent. Runtime/pixel equivalence is not yet verified.
+This is NOT a screen locker. Use swaylock-plugin for separate authentication.
+.SH OPTIONS
+.TP
+.BR \-w ", " \-\-windowed
+Use an ordinary xdg-shell preview window.
+.TP
+.B \-\-overlay
+Fullscreen layer-shell overlay (default), dismissed by input when used standalone.
+.TP
+.BI \-\-pipes " MODE"
+single (default), multiple, or an exact count from 1 to 4. Multiple randomly
+chooses 2..4 heads per scene; numeric counts fix the initial head count each scene.
+Counts above one default to seven starts per solid scene (four when textured) and the
+reference's persistent chase behavior.
+.TP
+.BI \-\-joints " MODE"
+Elbow (default), ball, mixed or cycle. Mixed chooses a ball on one of three random
+buckets at each turn. Cycle advances Elbow/Ball/Mixed at scene resets.
+.TP
+.BI \-\-texture " PATH"
+Select a BMP/JPEG/TGA/PNG custom texture.
+.TP
+.BI \-\-default-texture " PATH"
+Select a locally supplied default bitmap, also used if the custom texture fails.
+No texture arguments means Solid. Requested assets must exist and pass limits.
+.TP
+.BI \-\-tessellation " N"
+XP mesh quality, 0..4. Default 0; slice counts are 8, 12, 20, 28 and 36.
+.TP
+.BI \-\-speed-level " N"
+XP speed slider, 0..20. Default 16 has a strict 20 ms render-eligibility gate.
+20 removes that software gate but remains callback-paced. There is no catch-up.
+The old millisecond speed option is rejected, not silently reinterpreted.
+.TP
+.BI \-\-scene-length " N"
+Multiply the scene's pipe-start budget by 1..10 (default 1), allowing more growth
+before fading without changing speed or head count. A full grid can end a scene
+earlier; this is not an exact duration multiplier.
+.TP
+.BI \-\-seed " N"
+Unsigned 32-bit XP RNG state before ten warm-up draws. Default startup seed is
+the wall clock's millisecond field. RNG parity alone is not whole-scene parity.
+.TP
+.BI \-\-max-seconds " N"
+Exit after 1..86400 seconds, even without frame callbacks.
+.TP
+.BR \-h ", " \-\-help
+Show usage without opening a display.
+.TP
+.BR \-V ", " \-\-version
+Show version.
+.SH LAYOUT
+XP layout always derives from each output's aspect ratio: 15 nodes along the
+longer axis and depth 15. Geometry is not stretched to fill a modern fitted box.
+The old grid, continuous-rotate, teapot, max-runs and max-length options have
+been removed. Normal single scenes allow five solid or three textured starts and
+grow until trapped. Texture repetition uses target pixels, not a fixed UV scale.
+.SH LIMITS
+The aggregate model/command/upload budget is 128 MiB; retained colour/depth targets
+share a separate 512-MiB padded-storage budget with owned mesh and texture data.
+Driver window buffers are additional. Buffers are capped at 16384 per dimension, 64 megapixels and actual GL
+capabilities. Rebuild replay is bounded at 4096 accumulated fade passes.
+.SH EXIT STATUS
+0: dismissal, timeout, help or version. 1: runtime failure. 2: invalid arguments.
+.SH AUTHORS
+The native Wayland port originated in flacyak/wlpipes. Retained code is attributed
+in LICENSE and NOTICE. No Microsoft program or artwork is included.
+.SH SEE ALSO
+.BR swaylock-plugin (1)

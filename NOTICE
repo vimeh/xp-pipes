@@ -1,0 +1,13 @@
+The native Wayland port originated in flacyak/wlpipes v0.1.0
+(f80c575a567df3125fb2d2e53be1632aa87dc08c), an MIT-licensed project:
+https://github.com/flacyak/wlpipes
+
+The native Wayland/EGL presentation infrastructure retains that port's MIT-licensed
+structure. Growth, geometry, material selection and lighting now use independently
+written implementations of statically recovered XP behavior and documented graphics
+equations. The old XScreenSaver-based walker, palette and shaders are removed.
+
+The GLUT/Kilgard/SGI teapot code and control-point data have been removed.
+No Microsoft executable, PDB, generated pseudocode or extracted artwork is included.
+The source-availability and asset-redistribution questions are documented separately;
+possession of the reference artifacts does not establish redistribution rights.

@@ -1,0 +1,5 @@
+/.jj/
+/target/
+/dist/
+/result*
+.DS_Store

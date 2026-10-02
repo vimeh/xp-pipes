@@ -1,0 +1,27 @@
+[package]
+name = "wlpipes"
+version = "0.4.1"
+edition = "2024"
+license = "MIT"
+description = "Windows XP 3D Pipes recreation for Wayland and native macOS"
+repository = "https://github.com/vimeh/xp-pipes"
+readme = "README.md"
+
+[dependencies]
+bytemuck = { version = "1", features = ["derive"] }
+glam = "0.33"
+glow = "0.18"
+image = { version = "0.25", default-features = false, features = ["bmp", "jpeg", "png", "tga"] }
+[target.'cfg(target_os = "linux")'.dependencies]
+khronos-egl = { version = "6", features = ["static"] }
+smithay-client-toolkit = { version = "0.21", default-features = false, features = [
+  "calloop",
+  "system",
+] }
+wayland-client = { version = "0.31", features = ["system"] }
+wayland-egl = "0.32"
+wayland-protocols = { version = "0.32", features = ["client", "staging"] }
+
+[lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
