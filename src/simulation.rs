@@ -1030,7 +1030,7 @@ mod tests {
         s.pipes[0].status = Status::Trapped;
         s.tick(&mut random, &mut events);
         assert!(s.pipes.is_empty());
-        assert!(events.is_empty());
+        assert_eq!(events, Vec::<Event>::new());
         s.tick(&mut random, &mut events);
         assert_eq!(events[0], Event::Reset);
         assert_eq!(s.starts, 1);
